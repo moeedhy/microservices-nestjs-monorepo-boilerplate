@@ -1,17 +1,25 @@
+enum Roles {
+  admin
+  user
+}
+
 type User {
   id: String
   email: String
+  roles: [Roles]
 }
 
 input CreateUserInput {
   email: String!
   password: String!
+  roles: [Roles]
 }
 
 input UpdateUserInput {
   id: String!
   email: String
   password: String
+  roles: [Roles]
 }
 
 type Query {

@@ -9,6 +9,7 @@ import { UserRepository } from './user.repository';
 import { UserDocument } from './models/user.schema';
 import * as bcrypt from 'bcrypt';
 import { User } from './graphql';
+
 @Injectable()
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}

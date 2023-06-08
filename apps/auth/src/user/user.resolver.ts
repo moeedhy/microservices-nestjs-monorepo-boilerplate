@@ -6,7 +6,9 @@ import { UseGuards } from '@nestjs/common';
 import {
   GqlCurrentUser,
   GqlJwtAuthGuard,
+  Roles,
   TokenPayloadInterface,
+  UserRoles,
 } from '@app/common';
 
 @Resolver('User')
@@ -14,6 +16,8 @@ export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
   @Mutation('createUser')
+  @UseGuards(GqlJwtAuthGuard)
+  @Roles(UserRoles.admin)
   create(@Args('createUserInput') createUserInput: CreateUserDto) {
     return this.userService.create(createUserInput);
   }
@@ -25,6 +29,7 @@ export class UserResolver {
   }
 
   @Query('user')
+  @UseGuards(GqlJwtAuthGuard)
   findOne(@Args('id') id: string) {
     return this.userService.findOne(id);
   }
@@ -36,11 +41,13 @@ export class UserResolver {
   }
 
   @Mutation('updateUser')
+  @UseGuards(GqlJwtAuthGuard)
   update(@Args('updateUserInput') updateUserInput: UpdateUserDto) {
     return this.userService.update(updateUserInput.id, updateUserInput);
   }
 
   @Mutation('removeUser')
+  @UseGuards(GqlJwtAuthGuard)
   remove(@Args('id') id: string) {
     return this.userService.remove(id);
   }
